@@ -1,4 +1,5 @@
 
+![plan1](./etape_passive.png)
 # 🧠 Analyse des Applications Web (Phase Passive)
 
 ## 🎯 Objectifs
