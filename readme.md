@@ -150,7 +150,7 @@ Utilisation exclusive de sources publiques et ouvertes (Open Source Intelligence
 | Type de données | Outils / Commandes / Sites |
 |-----------------|----------------------------|
 | **WHOIS** (infos de domaine, DNS, email) | `whois example.com`<br>Site : [https://whois.domaintools.com](https://whois.domaintools.com) |
-| **SSL/TLS** (certificats, CN, SAN, dates) | echo | openssl s_client -connect example.com:443`<br>Analyse manuelle du certificat |
+| **SSL/TLS** (certificats, CN, SAN, dates) | `echo \\| openssl s_client -connect example.com:443`<br>Analyse manuelle du certificat |
 | **DNS passif** (sous-domaines historiques, résolutions) | - [https://crt.sh](https://crt.sh)<br>- [https://securitytrails.com](https://securitytrails.com)<br>- [https://dnsdumpster.com](https://dnsdumpster.com)<br>- [https://shodan.io](https://shodan.io)<br>- [https://spyse.com](https://spyse.com) |
 | **Réseaux sociaux** (employés, techno, leaks) | Recherche sur : `LinkedIn`, `Twitter`, Google Dorks : `site:linkedin.com company +tech` |
 | **Fuites de données** (emails/passwords compromis) | [https://haveibeenpwned.com](https://haveibeenpwned.com)<br>[https://dehashed.com](https://dehashed.com)<br>[https://intelx.io](https://intelx.io) |
