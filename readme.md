@@ -140,6 +140,9 @@ gobuster dir -u http://IP_SERVEUR -w /usr/share/wordlists/seclists/Discovery/Web
 - # 🕵️ Phase OSINT - Collecte d'informations (passive)
 
 ## 🎯 Objectif
+<p align="center">
+  <img src="./OSINT.PNG" alt="Plan Application" width="200">
+</p>
 Obtenir un maximum d'informations sur une cible **sans interaction directe intrusive**.  
 Utilisation exclusive de sources publiques et ouvertes (Open Source Intelligence).
 
