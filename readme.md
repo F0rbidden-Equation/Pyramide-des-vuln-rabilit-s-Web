@@ -86,7 +86,7 @@ Cette phase permet de **cartographier l'environnement applicatif** du site sans 
 |--------|-------------|
 | **robots.txt** | Peut révéler des pages volontairement masquées (`/admin`, `/private`, etc.) |
 | **favicon.ico** | Signature d’un framework : possibilité de calculer son **hash MD5** pour identifier le CMS |
-| **Commande pour récupérer le hash :** | `curl https://example.com/favicon.ico | md5sum` |
+| **Commande pour récupérer le hash :** \| `curl https://example.com/favicon.ico \| md5sum` |
 | **Base OWASP de favicon hash :** | [OWASP favicon DB](https://wiki.owasp.org/index.php/owasp_favicon.database) |
 | **sitemap.xml** | Liste souvent tous les fichiers/pages indexables |
 | **Analyse entêtes HTTP** | Fournit des infos sur le serveur, versions, protections |
