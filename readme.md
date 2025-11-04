@@ -107,7 +107,7 @@ Cette phase permet de **cartographier l'environnement applicatif** du site sans 
 | **Découverte automatique de répertoires** | Bruteforce de chemins cachés via des wordlists |
 
 #### 🔧 Outils de bruteforce et leurs commandes :
-
+###### Enumeration des pages via BruteForce avec une wordlist (common.txt) :
 ```bash
 # FFUF - Fast web fuzzer
 ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt -u http://IP_SERVEUR/FUZZ
