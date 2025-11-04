@@ -4,7 +4,7 @@
 
 ## 🎯 Objectifs
 <p align="center">
-  <img src="./AnalyseApplication.png" alt="Plan Application" width="600">
+  <img src="./AnalyseApplication.png" alt="Plan Application" width="400">
 </p>
 - Comprendre le fonctionnement technique du site web cible (ex. `website.com`)
 - Collecter des informations visibles dans le navigateur **sans interagir activement avec le serveur**
