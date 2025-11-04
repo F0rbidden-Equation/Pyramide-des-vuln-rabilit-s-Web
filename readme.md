@@ -3,7 +3,9 @@
 # 🧠 Analyse des Applications Web (Phase Passive)
 
 ## 🎯 Objectifs
-![plan2](./AnalyseApplication.png)
+<p align="center">
+  <img src="./AnalyseApplication.png" alt="Plan Application" width="600">
+</p>
 - Comprendre le fonctionnement technique du site web cible (ex. `website.com`)
 - Collecter des informations visibles dans le navigateur **sans interagir activement avec le serveur**
 - Identifier les frameworks, technologies, redirections et éléments sensibles accessibles publiquement
