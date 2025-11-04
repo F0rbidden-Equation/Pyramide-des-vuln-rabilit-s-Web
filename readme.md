@@ -70,7 +70,7 @@ Cette phase permet de **cartographier l'environnement applicatif** du site sans 
 
 ## 🎯 Objectifs
 <p align="center">
-  <img src="./decouvertecontenus.PNG" alt="Plan Application" width="200">
+  <img src="./decouverte_contenus.PNG" alt="Plan Application" width="200">
 </p>
 - Révéler les fichiers, pages et répertoires non listés dans le menu du site.
 - Identifier les technologies, frameworks, CMS, endpoints, historiques.
