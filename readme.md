@@ -136,3 +136,52 @@ gobuster dir -u http://IP_SERVEUR -w /usr/share/wordlists/seclists/Discovery/Web
 
 - Ces techniques sont **100% passives ou semi-passives**, aucun scan direct de vulnérabilité ici.
 - Résultats issus de cette phase servent à alimenter l’étape de **scanning actif/fuzzing ciblé**.
+
+- # 🕵️ Phase OSINT - Collecte d'informations (passive)
+
+## 🎯 Objectif
+Obtenir un maximum d'informations sur une cible **sans interaction directe intrusive**.  
+Utilisation exclusive de sources publiques et ouvertes (Open Source Intelligence).
+
+---
+
+## 🧩 Partie 1 : Collecte d'informations principales
+
+| Type de données | Outils / Commandes / Sites |
+|-----------------|----------------------------|
+| **WHOIS** (infos de domaine, DNS, email) | `whois example.com`<br>Site : [https://whois.domaintools.com](https://whois.domaintools.com) |
+| **SSL/TLS** (certificats, CN, SAN, dates) | `echo | openssl s_client -connect example.com:443`<br>Analyse manuelle du certificat |
+| **DNS passif** (sous-domaines historiques, résolutions) | - [https://crt.sh](https://crt.sh)<br>- [https://securitytrails.com](https://securitytrails.com)<br>- [https://dnsdumpster.com](https://dnsdumpster.com)<br>- [https://shodan.io](https://shodan.io)<br>- [https://spyse.com](https://spyse.com) |
+| **Réseaux sociaux** (employés, techno, leaks) | Recherche sur : `LinkedIn`, `Twitter`, Google Dorks : `site:linkedin.com company +tech` |
+| **Fuites de données** (emails/passwords compromis) | [https://haveibeenpwned.com](https://haveibeenpwned.com)<br>[https://dehashed.com](https://dehashed.com)<br>[https://intelx.io](https://intelx.io) |
+| **Technologies exposées** | [https://builtwith.com](https://builtwith.com)<br>[https://netcraft.com](https://netcraft.com) |
+| **Dépôts GitHub** (leaks de code .env, etc.) | `site:github.com "example.com"` ou outils comme `github-subdomains` |
+
+---
+
+## 🧩 Partie 2 : Collecte d'informations supplémentaires
+
+| Type | Outils / Sites |
+|------|----------------|
+| **Trackers Google Analytics / AdSense** | - [https://spyonweb.com](https://spyonweb.com)<br>- [https://publicwww.com](https://publicwww.com) |
+| **Emails liés** au domaine | - [https://hunter.io](https://hunter.io)<br>- [https://emailrep.io](https://emailrep.io) |
+| **Fichiers spéciaux** (politiques, sécurité) | `http://example.com/security.txt`<br>`http://example.com/humans.txt` |
+| **Favicon Hash** | `curl https://example.com/favicon.ico | md5sum`<br>Recherche via Shodan : `http.favicon.hash:<hash>` |
+| **Empreintes TLS** | [https://censys.io](https://censys.io)<br>[https://crt.sh](https://crt.sh) |
+| **Recherche ASN / hébergeur** | [https://bgpview.io](https://bgpview.io)<br>[https://securitytrails.com](https://securitytrails.com) |
+| **Recherche par image inversée** | [https://images.google.com](https://images.google.com) (Reverse Image Search) |
+
+---
+
+## 💡 Astuces
+
+- Combine les données des outils comme `crt.sh` avec `ffuf`, `subfinder`, etc. pour élargir les sous-domaines.
+- Les emails récupérés peuvent être testés sur HaveIBeenPwned ou EmailRep pour voir leur réputation et compromission.
+- PublicWWW et SpyOnWeb sont très utiles pour corréler plusieurs sites qui partagent **le même ID Analytics ou AdSense**.
+
+---
+
+## 📌 Note éthique
+Toutes ces méthodes relèvent de **l’OSINT passif**.  
+Elles ne génèrent **aucune alerte** ni **trafic malveillant** sur les systèmes cibles.  
+Elles sont utilisées pour l’analyse, la documentation ou les tests d’intrusion **avec autorisation**.
