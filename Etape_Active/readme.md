@@ -42,7 +42,71 @@ pip install dnsgen
 # jq (pour parser le JSON)
 sudo apt install jq -y
 ```
+# 🌐 Dnsdumpster — Reconnaissance Passive via Interface Web
 
+`Dnsdumpster` est un outil en ligne permettant d'obtenir des informations DNS publiques (sous-domaines, serveurs, IPs, schéma réseau) sans envoyer de requêtes actives vers la cible.
+
+---
+
+## 🔗 Accès à l'outil
+
+Site officiel : [https://dnsdumpster.com](https://dnsdumpster.com)
+
+Aucune installation nécessaire.
+
+---
+
+## 🧭 Étapes d'utilisation
+
+1. Accéder au site : [https://dnsdumpster.com](https://dnsdumpster.com)
+2. Entrer le nom de domaine (exemple : `example.com`)
+3. Résoudre le captcha (si présent)
+4. Lancer l’analyse
+5. Télécharger les résultats :
+   - `dnsdumpster.csv` (tableau de résultats)
+   - `dnsdumpster.svg` (schéma visuel du réseau)
+
+---
+
+## 💾 Organisation locale des résultats
+
+```bash
+export DOMAIN="example.com"
+export OUTDIR="out/$DOMAIN/01-subdomains"
+mkdir -p "$OUTDIR/raw/dnsdumpster"
+
+# Copier les fichiers manuellement depuis le dossier Téléchargements
+mv ~/Téléchargements/dnsdumpster.csv "$OUTDIR/raw/dnsdumpster/results.csv"
+mv ~/Téléchargements/dnsdumpster.svg "$OUTDIR/raw/dnsdumpster/map.svg"
+```
+
+---
+
+## 🧪 Optionnel : extraire les sous-domaines depuis le CSV
+
+```bash
+cut -d',' -f1 "$OUTDIR/raw/dnsdumpster/results.csv" | grep -v '^$' | sort -u > "$OUTDIR/clean/dnsdumpster_subdomains.txt"
+```
+
+## 🔁 Ajouter les sous-domaines à la liste globale
+
+```bash
+cat "$OUTDIR/clean/dnsdumpster_subdomains.txt" >> "$OUTDIR/clean/passive_uniq.txt"
+sort -u "$OUTDIR/clean/passive_uniq.txt" -o "$OUTDIR/clean/passive_uniq.txt"
+```
+
+---
+
+## ✅ Résumé
+
+| Fichier généré | Description |
+|----------------|-------------|
+| `results.csv` | Résultats bruts exportés depuis l’interface |
+| `map.svg` | Schéma du réseau DNS et IP |
+| `dnsdumpster_subdomains.txt` | Sous-domaines extraits (via CSV) |
+| `passive_uniq.txt` | Liste finale des sous-domaines passifs enrichie |
+
+---
 ---
 
 ## 1️⃣ Subfinder
