@@ -1,8 +1,8 @@
 
 ![plan1](./etape_passive.png)
-# 🧠 Analyse des Applications Web (Phase Passive)
+# Analyse des Applications Web (Phase Passive)
 
-## 🎯 Objectifs
+## 🧩 Objectifs
 <p align="center">
   <img src="./AnalyseApplication.png" alt="Plan Application" width="200">
 </p>
@@ -42,7 +42,7 @@
 
 ---
 
-## 🧪 Techniques supplémentaires à explorer
+## 🧩 Techniques supplémentaires à explorer
 
 - **Analyse de fichiers .map** : tenter d'accéder à `main.js.map` pour reconstruire du code JS non minifié
 - **Observation des cookies** : présence de JWT, sessions ou infos sensibles
@@ -121,7 +121,7 @@ gobuster dir -u http://IP_SERVEUR -w /usr/share/wordlists/seclists/Discovery/Web
 
 ---
 
-## 🚀 Outils complémentaires (optionnels à ajouter)
+## 🧩 Outils complémentaires (optionnels à ajouter)
 
 | Outil | Utilité |
 |-------|--------|
