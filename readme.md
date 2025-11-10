@@ -188,3 +188,26 @@ Utilisation exclusive de sources publiques et ouvertes (Open Source Intelligence
 Toutes ces méthodes relèvent de **l’OSINT passif**.  
 Elles ne génèrent **aucune alerte** ni **trafic malveillant** sur les systèmes cibles.  
 Elles sont utilisées pour l’analyse, la documentation ou les tests d’intrusion **avec autorisation**.
+
+## 📋 Template OSINT (Collecte Passive)
+
+Avant d'entamer la phase active (scans, fuzzing, exploitation), il est essentiel de **centraliser toutes les informations collectées lors de la phase OSINT passive**.  
+Ce fichier sert de modèle à remplir pour chaque cible afin de préparer efficacement la suite des tests.
+
+🔗 **Téléchargement du modèle à remplir :**  
+➡️ [OSINT_Template_Passive.txt](./OSINT_Template_Passive.txt)
+
+### 🧠 Contenu du template :
+- Informations générales (domaine, IP, ASN, hébergeur)
+- Certificats SSL/TLS
+- Sous-domaines passifs (crt.sh, DNSDumpster…)
+- Fichiers spéciaux (robots.txt, sitemap.xml, security.txt…)
+- Emails liés au domaine (Hunter.io, EmailRep…)
+- Technologies détectées (CMS, JS, frameworks…)
+- Réseaux sociaux, fuites de données
+- Historique du site via Wayback Machine
+- Hash du favicon (empreinte Shodan)
+- Buckets S3, GitHub leaks
+- Vérifications avant phase active
+
+✅ **But :** Ne rien oublier, et basculer vers l'analyse active en étant déjà informé sur les vulnérabilités potentielles visibles publiquement.
