@@ -232,5 +232,115 @@ mapcidr -aggregate -silent -l "$OUTDIR/tmp/ips.txt" -o "$OUTDIR/clean/cidrs.txt"
 
 ---
 
-✅ Étape suivante : **Scan de Ports (Nmap, Rustscan...)**
+# 🚪 Phase Active — Scan de Ports (Port Scanning)
+
+Cette étape consiste à identifier les services actifs sur les hôtes précédemment découverts via leurs ports ouverts. On utilise ici des outils efficaces comme `nmap`, `rustscan`, `naabu`, etc.
+
+---
+
+## 📁 Initialisation
+
+```bash
+export DOMAIN="example.com"
+export OUTDIR="out/$DOMAIN/02-portscan"
+mkdir -p "$OUTDIR"/{raw,clean}
+```
+
+Tu dois déjà avoir un fichier contenant les IPs à scanner, par exemple :
+
+```bash
+cat out/$DOMAIN/01-subdomains/clean/subs_with_ips.txt | awk '{print $2}' | sed 's/,/\n/g' | sort -u > "$OUTDIR/targets.txt"
+```
+
+---
+
+## 🛠️ Outils à installer
+
+```bash
+# Nmap (classique)
+sudo apt install nmap -y
+
+# Rustscan (rapide)
+cargo install rustscan
+
+# Naabu (scan TCP passif)
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+
+# Masscan (ultra rapide, bruit fort)
+sudo apt install masscan -y
+```
+
+---
+
+## ⚡ Rustscan — Scan rapide des ports TCP
+
+```bash
+rustscan -a "$OUTDIR/targets.txt" --ulimit 5000 -b 1500 -- -sS -Pn -n -T4 -oA "$OUTDIR/raw/rustscan_output"
+```
+
+> Option `-b 1500` = nombre de batchs / IPs simultanées.
+
+---
+
+## 🔍 Nmap — Scan approfondi
+
+```bash
+nmap -iL "$OUTDIR/targets.txt" -p- -T4 -sS -n -Pn -oA "$OUTDIR/raw/nmap_full_tcp"
+```
+
+### Scan avec détection de services (après ports identifiés)
+
+```bash
+nmap -iL "$OUTDIR/targets.txt" -p 21,22,23,25,80,443,445,3306,8080,8443 \
+  -sV -sC -A -T4 -Pn -n -oA "$OUTDIR/raw/nmap_detect_services"
+```
+
+> Tu peux adapter les ports selon les résultats de Rustscan/Naabu.
+
+---
+
+## 🛰️ Naabu — TCP discovery léger
+
+```bash
+naabu -list "$OUTDIR/targets.txt" -top-ports 1000 -rate 5000 -o "$OUTDIR/clean/naabu_ports.txt"
+```
+
+---
+
+## ⚙️ Masscan — Scan massif (à utiliser avec précaution)
+
+```bash
+masscan -iL "$OUTDIR/targets.txt" -p1-65535 --rate 10000 -oG "$OUTDIR/raw/masscan.gnmap"
+```
+
+> ⚠️ Attention au `--rate` pour éviter d'être détecté/banni. Peut générer du bruit important.
+
+---
+
+## ✅ Fusion & Nettoyage
+
+Tu peux maintenant centraliser tous les ports identifiés dans un seul fichier :
+
+```bash
+cat "$OUTDIR"/clean/*.txt "$OUTDIR"/raw/*.gnmap "$OUTDIR"/raw/*.nmap | grep -Eo '[0-9]{1,5}/open' | cut -d'/' -f1 | sort -un > "$OUTDIR/clean/ports_all.txt"
+```
+
+---
+
+## 📦 Résumé des fichiers
+
+| Fichier | Description |
+|--------|-------------|
+| `targets.txt` | Liste des IPs cibles |
+| `rustscan_output.*` | Résultats rapides TCP |
+| `nmap_full_tcp.*` | Tous les ports TCP (sauf UDP) |
+| `nmap_detect_services.*` | Détail des services identifiés |
+| `naabu_ports.txt` | Ports découverts par Naabu |
+| `masscan.gnmap` | Ports ouverts en scan rapide |
+| `ports_all.txt` | Liste finale de ports à analyser |
+
+---
+
+✅ Étape suivante : **Analyse de services et fingerprint (whatweb, wappalyzer, etc.)**
+
 
