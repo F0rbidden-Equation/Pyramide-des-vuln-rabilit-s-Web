@@ -341,6 +341,117 @@ cat "$OUTDIR"/clean/*.txt "$OUTDIR"/raw/*.gnmap "$OUTDIR"/raw/*.nmap | grep -Eo 
 
 ---
 
-✅ Étape suivante : **Analyse de services et fingerprint (whatweb, wappalyzer, etc.)**
+# 🧬 Phase Active — Fingerprinting & Analyse de Services
+
+Cette phase vise à identifier les technologies, serveurs, CMS, WAF, et autres composants exposés sur les services découverts via le scan de ports.
+
+---
+
+## 📁 Initialisation
+
+```bash
+export DOMAIN="example.com"
+export OUTDIR="out/$DOMAIN/03-fingerprint"
+mkdir -p "$OUTDIR"/{raw,clean}
+```
+
+Tu dois déjà avoir une liste de cibles HTTP/HTTPS actives (ex: `urls.txt` de httpx).
+
+```bash
+cp out/$DOMAIN/01-subdomains/live/urls.txt "$OUTDIR/targets_http.txt"
+```
+
+---
+
+## 🛠️ Outils à installer
+
+```bash
+# WhatWeb
+sudo apt install whatweb -y
+
+# Wappalyzer CLI (Node.js)
+npm install -g wappalyzer
+
+# Nmap (sV - service version detection)
+sudo apt install nmap -y
+
+# Nuclei (vuln/fingerprint scanner)
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+```
+
+---
+
+## 🔬 WhatWeb — Détection CMS / techs Web
+
+```bash
+whatweb -i "$OUTDIR/targets_http.txt" --log-verbose="$OUTDIR/raw/whatweb_results.txt"
+```
+
+---
+
+## 🧪 Wappalyzer CLI — Stack Web (JS-based)
+
+```bash
+# Exemple simple
+wappalyzer https://example.com
+
+# Pour tous les hôtes (version CLI JS)
+cat "$OUTDIR/targets_http.txt" | while read url; do echo "[*] $url" && wappalyzer "$url"; done > "$OUTDIR/raw/wappalyzer_output.txt"
+```
+
+---
+
+## 🔎 Nmap (sV) — Détection de version sur ports TCP
+
+```bash
+nmap -iL "$OUTDIR/../02-portscan/targets.txt" -p 21,22,80,443,445,3306,8080 \
+  -sV -sC -Pn -T4 -oA "$OUTDIR/raw/nmap_services"
+```
+
+> Adapte les ports selon `ports_all.txt` ou en gardant les plus classiques.
+
+---
+
+## 🚨 Nuclei — Détection de vulnérabilités & fingerprint
+
+```bash
+# Télécharger les templates (à faire 1x)
+nuclei -update -silent
+
+# Exécution des templates de détection (tech, vuln, etc.)
+nuclei -l "$OUTDIR/targets_http.txt" -t tags=fingerprint,tech -o "$OUTDIR/raw/nuclei_fingerprint.txt"
+
+# Scanner de vulnérabilités web connues
+nuclei -l "$OUTDIR/targets_http.txt" -severity high,critical -o "$OUTDIR/raw/nuclei_vulnscan.txt"
+```
+
+---
+
+## 🧹 Nettoyage / fusion des résultats
+
+```bash
+# Fusion simple des résultats fingerprint
+cat "$OUTDIR"/raw/whatweb_results.txt "$OUTDIR"/raw/wappalyzer_output.txt "$OUTDIR"/raw/nuclei_fingerprint.txt > "$OUTDIR/clean/tech_stack_all.txt"
+sort -u "$OUTDIR/clean/tech_stack_all.txt" -o "$OUTDIR/clean/tech_stack_all.txt"
+```
+
+---
+
+## 📦 Résumé des fichiers
+
+| Fichier | Description |
+|--------|-------------|
+| `targets_http.txt` | URLs à fingerprint |
+| `whatweb_results.txt` | CMS et techs web |
+| `wappalyzer_output.txt` | Stack JS et web côté client |
+| `nmap_services.*` | Détection versions/OS/services |
+| `nuclei_fingerprint.txt` | Composants tech détectés |
+| `nuclei_vulnscan.txt` | Vulnérabilités web détectées |
+| `tech_stack_all.txt` | Résultat fusionné final |
+
+---
+
+✅ Étape suivante : **Recherche de vulnérabilités spécifiques (XSS, SQLi, LFI, RCE, etc.)**
+
 
 
