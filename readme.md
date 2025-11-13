@@ -5,9 +5,7 @@
 > **Cartographie complète des failles applicatives dans un contexte d’audit de sécurité offensif.**
 
 ![Pyramide des vulnérabilités Web](./pyramide_general.png)
-<p align="center">
-  <img src="./pyramide_general.png" alt="Application Plan" width="2000">
-</p>
+
 ---
 
 ## 🎯 Objectif du projet
