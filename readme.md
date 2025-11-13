@@ -6,7 +6,7 @@
 
 ![Pyramide des vulnérabilités Web](./pyramide_general.png)
 <p align="center">
-  <img src="./pyramide_general.png" alt="Application Plan" width="600">
+  <img src="./pyramide_general.png" alt="Application Plan" width="1000">
 </p>
 ---
 
