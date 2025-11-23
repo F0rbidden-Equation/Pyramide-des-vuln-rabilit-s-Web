@@ -1,6 +1,7 @@
 
 ![plan1](./etapes_active.png)
 # 🧭 Phase Active : Subdomain Enumeration
+![plan2](./SubFR.png)
 
 Ce guide fournit toutes les commandes **copiables** pour découvrir les sous-domaines d'une cible. Il comprend :
 - la création de l'environnement de travail,
