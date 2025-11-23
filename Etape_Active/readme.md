@@ -236,6 +236,9 @@ mapcidr -aggregate -silent -l "$OUTDIR/tmp/ips.txt" -o "$OUTDIR/clean/cidrs.txt"
 ---
 
 # 🚪 Phase Active — Scan de Ports (Port Scanning)
+<p align="center">
+  <img src="./PortFR.png" alt="Plan Application" width="200">
+</p>
 
 Cette étape consiste à identifier les services actifs sur les hôtes précédemment découverts via leurs ports ouverts. On utilise ici des outils efficaces comme `nmap`, `rustscan`, `naabu`, etc.
 
